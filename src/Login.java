@@ -28,132 +28,96 @@ public class Login extends JFrame implements ActionListener{
 
 	//Declaration:
 		JTextField nomBox,IDBox,specialiteBox;
-		JComboBox filiereBox,niveauBox;
+		JComboBox<String> filiereBox,niveauBox;
 		int width=400,height=500;
 		JLabel lblNom,lblID,lblFiliere,lblNiveau,lblSpecialite;
 		JButton button=new JButton("Submit");
 		String metier="";
 		Image icon=Toolkit.getDefaultToolkit().getImage("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\icon.png");
 		
-		//fct for fonts :
-		public Font myFont(String Path) {
-			//***********************************Font area**************************
-		     
-	        try {
-	            // Specify the path to the font file
-	        	File fontFile=new File(Path);
-	            
-	            // Create a Font object from the font file
-	        	Font customFont;
-	            return customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-	            
-	        } catch (IOException | FontFormatException e) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	        
-	        //*****************************************************
-		}
-		//welcoming fct:
-		 public void buildInterface() {
-			 	String[] options = {"Student","Teacher"};
-			 	int w=625,h=495;
-		        JFrame frame = new JFrame("StudyQuest");
-		        frame.setIconImage(icon);
-		        JPanel heading=new JPanel();
-		        JLayeredPane layeredPane = new JLayeredPane();
-		        JLabel label1 = new JLabel(" Welcome ");
-		        JLabel label3 = new JLabel(" to StudyQuest ");
-		        JLabel label2=new JLabel(" I am : ");
-		        ImageIcon background=new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\background.jpg");
-		        JLabel backgroundLabel = new JLabel(background);
-		        JComboBox<String> comboBox = new JComboBox<>(options);
-		        JButton submitButton = new JButton("Next");
-		        
-		       // Icon buttonIcon= new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\right.png");
-		        
-		        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		        frame.setSize(w,h);
-		        frame.setLocationRelativeTo(null);
-				frame.setLayout(null);
-		        
-				heading.setBackground(new Color(0,0,0,0));
-				heading.setBounds(0,100,w,200);
-				heading.setLayout(null);
-				
-				backgroundLabel.setBounds(0, 0, 612, 459);
-				
-		        label1.setBounds(w/2-150,-3,300,100);
-		        label1.setForeground(new Color(245,75,217,100));
-		        label3.setBounds(w/2-20,15,300,100);
-		        label3.setForeground(new Color(3,5,217,100));
-		        label3.setBackground(new Color(0,0,0,0));
-		        label2.setBounds(w/2-50,80,300,100);
-		        label2.setForeground(new Color(0,0,0,150));
-		        heading.add(label1);
-		        heading.add(label2);
-		        heading.add(label3);
-		        
-		        comboBox.setBounds(w/2-50,140,100,20);
-		        comboBox.setBackground(Color.white);
-		        comboBox.setForeground(new Color(0,0,0,80));
-		        heading.add(comboBox);
-		       
-		        submitButton.setBounds(420,330, 90,30);
-		        //submitButton.setBackground(Color.white);
-		        submitButton.setBorderPainted(false);
-		        submitButton.setForeground(new Color(0,0,0,170));
-		        submitButton.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent e) {
-		               String selectedOption = (String) comboBox.getSelectedItem();
-		               metier=selectedOption;
-		               System.out.println(metier);
-		               frame.dispose(); // Close the interface
-		            }
-		        });
-		        //***********************************Font area**************************
-		        Font customFont=myFont("C:\\Users\\hp\\Documents\\FONTS\\Poppins-Medium.ttf");
-		        submitButton.setFont(customFont.deriveFont(Font.BOLD,12));
-	            label1.setFont(customFont.deriveFont(Font.BOLD,50));
-	            label2.setFont(customFont.deriveFont(Font.BOLD,13));		            
-	            comboBox.setFont(customFont.deriveFont(Font.BOLD,12));
-	            
-	            customFont=myFont("C:\\Users\\hp\\Documents\\FONTS\\RemachineScript_Personal_Use.ttf");
-	            label3.setFont(customFont.deriveFont(Font.BOLD,40));
-		        
-		        //*****************************************************
-		        
-		        layeredPane.add(backgroundLabel, Integer.valueOf(0));
-		        layeredPane.add(heading, Integer.valueOf(2));
-		        layeredPane.add(submitButton, Integer.valueOf(1));
-		        
-		       
-				
-		        frame.setContentPane(layeredPane);
-		        frame.setVisible(true);
-		    }
 		 
-		public Login(){
+		public Login(){	
+			
+		String[] options = {"Student","Teacher"};
+	 	int w=625,h=495;
+        JFrame frame = new JFrame("StudyQuest");
+        frame.setIconImage(icon);
+        JPanel heading=new JPanel();
+        JLayeredPane layeredPane = new JLayeredPane();
+        JLabel label1 = new JLabel(" Welcome ");
+        JLabel label3 = new JLabel(" to StudyQuest ");
+        JLabel label2=new JLabel(" I am : ");
+        ImageIcon background=new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\background.jpg");
+        JLabel backgroundLabel = new JLabel(background);
+        JComboBox<String> comboBox = new JComboBox<>(options);
+        JButton submitButton = new JButton("Next");
+        
+       // Icon buttonIcon= new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\right.png");
+        
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setSize(w,h);
+        frame.setLocationRelativeTo(null);
+		frame.setLayout(null);
+        
+		heading.setBackground(new Color(0,0,0,0));
+		heading.setBounds(0,100,w,200);
+		heading.setLayout(null);
 		
-		buildInterface();
-		try {
-			//so it ways the use to enter ''metier '' beofre moving to the next tests
-			Thread.sleep(5000);//8s
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		backgroundLabel.setBounds(0, 0, 612, 459);
+		
+        label1.setBounds(w/2-150,-3,300,100);
+        label1.setForeground(new Color(245,75,217,100));
+        label3.setBounds(w/2-20,15,300,100);
+        label3.setForeground(new Color(3,5,217,100));
+        label3.setBackground(new Color(0,0,0,0));
+        label2.setBounds(w/2-50,80,300,100);
+        label2.setForeground(new Color(0,0,0,150));
+        heading.add(label1);
+        heading.add(label2);
+        heading.add(label3);
+        
+        comboBox.setBounds(w/2-50,140,100,20);
+        comboBox.setBackground(Color.white);
+        comboBox.setForeground(new Color(0,0,0,80));
+        heading.add(comboBox);
+       
+        submitButton.setBounds(420,330, 90,30);
+        //submitButton.setBackground(Color.white);
+        submitButton.setBorderPainted(false);
+        submitButton.setForeground(new Color(0,0,0,170));
+        //***********************************Font area**************************
+        fcts f=new fcts();
+        Font customFont=f.myFont("C:\\Users\\hp\\Documents\\FONTS\\RemachineScript_Personal_Use.ttf");
+        label3.setFont(customFont.deriveFont(Font.BOLD,40));
+        
+        customFont=f.myFont("C:\\Users\\hp\\Documents\\FONTS\\Poppins-Medium.ttf");
+        submitButton.setFont(customFont.deriveFont(Font.BOLD,12));
+        label1.setFont(customFont.deriveFont(Font.BOLD,50));
+        label2.setFont(customFont.deriveFont(Font.BOLD,13));		            
+        comboBox.setFont(customFont.deriveFont(Font.BOLD,12));
+        
+       
+        
+        //*****************************************************
+        
+        layeredPane.add(backgroundLabel, Integer.valueOf(0));
+        layeredPane.add(heading, Integer.valueOf(2));
+        layeredPane.add(submitButton, Integer.valueOf(1));
+        frame.setContentPane(layeredPane);
+        frame.setVisible(true);
+     
+		
 		setIconImage(icon);
 		setTitle("Login");//donne le nom de la fennetre
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(width,height);
 		setLocationRelativeTo(null);//pr centrer ds l'ecran
 		setLayout(null);
-		JLayeredPane layeredPane = new JLayeredPane();
+		JLayeredPane layeredPane2 = new JLayeredPane();
 		
-        JLabel background = new JLabel(new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\login.png"));
-        background.setBounds(0,0, width,height);
-        layeredPane.add(background,Integer.valueOf(0));
+        JLabel background2 = new JLabel(new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\login.png"));
+        background2.setBounds(0,0, width,height);
+        layeredPane2.add(background2,Integer.valueOf(0));
 		//creation:
 		lblNom=new JLabel("Enter your full name");
 		nomBox=new JTextField();
@@ -161,14 +125,13 @@ public class Login extends JFrame implements ActionListener{
 		lblID=new JLabel("Enter your ID number: ");
 		IDBox=new JTextField();
 		lblNiveau=new JLabel("Pick your level :");
-		JComboBox<String> niveauBox = new JComboBox<>(new String[] {"1", "2", "3"});
+		niveauBox = new JComboBox<>(new String[] {"1", "2", "3"});
 		lblFiliere=new JLabel("Pick your studies field ");
-		JComboBox<String> filiereBox = new JComboBox<>(new String[] {"GINFO", "GTR", "GSEII","GMSA","GESI","GINDUS"});
+		String[] filiereOptions={"GINFO", "GTR", "GSEII","GMSA","GESI","GINDUS"};
+		filiereBox = new JComboBox<>(filiereOptions);
 		
 		lblSpecialite=new JLabel("Enter your specialty");
 		specialiteBox=new JTextField();
-		
-		Font customFont=myFont("C:\\Users\\hp\\Documents\\FONTS\\Poppins-Medium.ttf");
        
 		//placements for both:
 		lblNom.setBounds(20,20,width,20);
@@ -201,35 +164,43 @@ public class Login extends JFrame implements ActionListener{
 		lblSpecialite.setFont(customFont.deriveFont(Font.BOLD,12));
 		specialiteBox.setFont(customFont.deriveFont(Font.BOLD,12));
 		//display:
-		if (metier.equals("Student")) {
-			// Add the components to the layered pane with the appropriate z-order
-			 layeredPane.add(lblNom, Integer.valueOf(1));
-			 layeredPane.add(nomBox, Integer.valueOf(1));
-			 layeredPane.add(button, Integer.valueOf(1));
-			 layeredPane.add(lblID, Integer.valueOf(1));
-			 layeredPane.add(IDBox, Integer.valueOf(1));
-			 layeredPane.add(lblNiveau, Integer.valueOf(1));
-			 layeredPane.add(niveauBox, Integer.valueOf(1));
-			 layeredPane.add(lblFiliere, Integer.valueOf(1));
-			 layeredPane.add(filiereBox, Integer.valueOf(1));
-			 this.setContentPane(layeredPane);
-			 setVisible(true);
-			}
-		else if(metier.equals("Teacher")){
-		// Add the components to the layered pane with the appropriate z-order
-		 layeredPane.add(button, Integer.valueOf(1));
-		 layeredPane.add(lblNom, Integer.valueOf(1));
-		 layeredPane.add(nomBox, Integer.valueOf(1));
-		 layeredPane.add(specialiteBox,Integer.valueOf(1));
-		 layeredPane.add(lblSpecialite,Integer.valueOf(1));
-		 this.setContentPane(layeredPane);
-		 setVisible(true);
-			}
-	
+		submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               String selectedOption = (String) comboBox.getSelectedItem();
+               metier=selectedOption;
+               frame.dispose(); // Close the interface
+               if (metier.equals("Student")) {
+       			// Add the components to the layered pane with the appropriate z-order
+       			 layeredPane2.add(lblNom, Integer.valueOf(1));
+       			 layeredPane2.add(nomBox, Integer.valueOf(1));
+       			 layeredPane2.add(button, Integer.valueOf(1));
+       			 layeredPane2.add(lblID, Integer.valueOf(1));
+       			 layeredPane2.add(IDBox, Integer.valueOf(1));
+       			 layeredPane2.add(lblNiveau, Integer.valueOf(1));
+       			 layeredPane2.add(niveauBox, Integer.valueOf(1));
+       			 layeredPane2.add(lblFiliere, Integer.valueOf(1));
+       			 layeredPane2.add(filiereBox, Integer.valueOf(1));
+       			 setContentPane(layeredPane2);
+       			 setVisible(true);
+       			}
+       		else if(metier.equals("Teacher")){
+       		// Add the components to the layered pane with the appropriate z-order
+       		 layeredPane2.add(button, Integer.valueOf(1));
+       		 layeredPane2.add(lblNom, Integer.valueOf(1));
+       		 layeredPane2.add(nomBox, Integer.valueOf(1));
+       		 layeredPane2.add(specialiteBox,Integer.valueOf(1));
+       		 layeredPane2.add(lblSpecialite,Integer.valueOf(1));
+       		 setContentPane(layeredPane2);
+       		 setVisible(true);
+       			}
+       	
+       		
+       		
+            }
+        });
 		
 		//actions:
-		button.addActionListener(this);
-		
+   		button.addActionListener(this);
 		
 		}
 		
@@ -240,14 +211,16 @@ public class Login extends JFrame implements ActionListener{
 				if (metier.equals("Student")) {
 					Etudiant E=new Etudiant();
 					E.nom=nomBox.getText();
-					E.ID=Integer.parseInt(IDBox.getText());
+					String tempId=IDBox.getText();//can't use the E.ID directy because what if no valu is entered then how can i Integer.parseint(a null or empty value)!!?
 					E.filiere = (String) filiereBox.getSelectedItem();
-					E.Niveau = Integer.parseInt((String) niveauBox.getSelectedItem());
-					if (E.nom.isEmpty() || E.ID ==null || E.filiere.isEmpty() || E.Niveau ==null) {
+					String tempNiveau =(String) niveauBox.getSelectedItem();//(string) cuz the getSelectedItem() returns an object
+					if (E.nom.isEmpty() || tempId.isEmpty() || E.filiere.isEmpty() || tempNiveau.isEmpty()) {
 						JOptionPane.showMessageDialog(this, "Please complete all fields");
 					}
 					else {
-						new StudentGI(E.nom,Integer.toString(E.ID),E.filiere,Integer.toString(E.Niveau)); // Create an instance of the Student class (assumed to be another JFrame)
+						E.ID=Integer.parseInt(tempId);
+						E.Niveau=Integer.parseInt(tempNiveau);
+						new StudentGI(E.nom,E.ID,E.filiere,E.Niveau); // Create an instance of the Student class (assumed to be another JFrame)
 						dispose(); // Close the current Login interface
 					}
 				}
