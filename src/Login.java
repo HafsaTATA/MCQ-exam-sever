@@ -1,15 +1,12 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,7 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.sun.jdi.IntegerValue;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 
 import java.awt.Toolkit;
 
@@ -35,7 +34,40 @@ public class Login extends JFrame implements ActionListener{
 		String metier="";
 		Image icon=Toolkit.getDefaultToolkit().getImage("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\icon.png");
 		
-		 
+		public boolean findUser(Etudiant E) {
+		    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaprojet", "root", "")) {
+		        String query = "SELECT Nom FROM etudiant WHERE id = ? AND nom = ?";
+		        PreparedStatement statement = conn.prepareStatement(query);
+		        statement.setInt(1, E.ID);
+		        statement.setString(2, E.nom);
+
+		        ResultSet result = statement.executeQuery();
+		        boolean userFound = result.next(); // Check if a row was returned
+
+		        return userFound;
+		    } catch (SQLException ex) {
+		        ex.printStackTrace();
+		    }
+
+		    return false; // Return false if an exception occurred
+		}
+
+		public boolean findUser(Professeur P) {
+		    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaprojet", "root", "")) {
+		        String query = "SELECT Nom FROM professeur WHERE nom = ?";
+		        PreparedStatement statement = conn.prepareStatement(query);
+		        statement.setString(1, P.nom);
+
+		        ResultSet result = statement.executeQuery();
+		        boolean userFound = result.next(); // Check if a row was returned
+
+		        return userFound;
+		    } catch (SQLException ex) {
+		        ex.printStackTrace();
+		    }
+
+		    return false; // Return false if an exception occurred
+		}
 		public Login(){	
 			
 		String[] options = {"Student","Teacher"};
@@ -218,10 +250,18 @@ public class Login extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(this, "Please complete all fields");
 					}
 					else {
+						
 						E.ID=Integer.parseInt(tempId);
 						E.Niveau=Integer.parseInt(tempNiveau);
-						new StudentGI(E.nom,E.ID,E.filiere,E.Niveau); // Create an instance of the Student class (assumed to be another JFrame)
-						dispose(); // Close the current Login interface
+							if (findUser(E)) {
+							new StudentGI(E.nom,E.ID,E.filiere,E.Niveau); // Create an instance of the Student class (assumed to be another JFrame)
+							dispose(); // Close the current Login interface
+							}else  {
+								int result = JOptionPane.showConfirmDialog(this,"You are not registered in this University.\n * Do you want to leave?","Confirmation",JOptionPane.YES_NO_OPTION);
+								 if (result == JOptionPane.YES_OPTION)
+					                    dispose();
+							}
+							
 					}
 				}
 				else if (metier.equals("Teacher")){
@@ -231,16 +271,26 @@ public class Login extends JFrame implements ActionListener{
 					if (P.nom.isEmpty() || P.Specialite.isEmpty()) {
 						JOptionPane.showMessageDialog(this, "Please complete all fields");
 					}
+					
 					else {
-						new ProfGI(P.nom);
-						dispose();
+						if (findUser(P)) {
+							new ProfGI(P.nom);
+							dispose();
+						}
+						else {
+							 int result = JOptionPane.showConfirmDialog(this,"You are not registered in this University.\n * Do you want to leave?","Confirmation",JOptionPane.YES_NO_OPTION);
+							 if (result == JOptionPane.YES_OPTION)
+				                    dispose();
+						}
+						
 						}
 				}
 			}
 		}
-
+		
 		public static void main(String[] args) {
-			//welcome interface: returns
 			 new Login();
-		}
+			
+			}
+	
 	}
