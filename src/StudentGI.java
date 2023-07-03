@@ -1,4 +1,3 @@
-//FEATURE TO ADD HERE : TEST IF THE ENTERRED NAME BELONG TO THE SCHOOL OR NOT
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -36,11 +35,11 @@ public class StudentGI extends JFrame implements ActionListener{
 		this.id=id;//pcq je l'utiliserai par la suite comme parametre pr constructeurs
 		this.nom=nom;
 		JLayeredPane layeredPane = new JLayeredPane();
-		ImageIcon backgroundImage=new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\menu.jpg");
+		ImageIcon backgroundImage=new ImageIcon("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\login2.jpg");
 		JLabel background=new JLabel(backgroundImage);
 		fcts L=new fcts();
 		Font customFont=L.myFont("C:\\Users\\hp\\Documents\\FONTS\\Poppins-Medium.ttf");
-		background.setBounds(0, 0, 1000, 1000);
+		background.setBounds(0, 0, 700, 1000);
 		setTitle(" Student space ");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(width,height);
@@ -59,23 +58,23 @@ public class StudentGI extends JFrame implements ActionListener{
 		
     //display :
         
-        intro.setBounds(75,45,width,30);
-        result.setBounds(width/2-150,height-100,300,30);
-        result.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        intro.setBounds(width/2-165,45,width,30);
+        result.setBounds(width/2-150,height-125,300,40);
+        result.setBorder(BorderFactory.createLineBorder(Color.WHITE,5));
         result.setForeground(Color.white);
-        result.setFont(customFont.deriveFont(Font.BOLD,15));
-        result.setBackground(new Color(135, 206, 250));
+        result.setFont(customFont.deriveFont(Font.BOLD,17));
+        result.setBackground(new Color(242, 208, 241));
         add(result);
         int y = 100;
+        customFont=L.myFont("C:\\Users\\hp\\Documents\\FONTS\\BaksoSapi.otf");
         for (int i = 0; i < qcmTitles.size(); i++) {
             qcmDispo[i] = new JButton(qcmTitles.get(i));
-            qcmDispo[i].setBounds(width/2-100, y, 200, 30);
+            qcmDispo[i].setBounds(width/2-250, y, width, 30);
             qcmDispo[i].setBorderPainted(false);
-            qcmDispo[i].setForeground(Color.white);
-            qcmDispo[i].setBackground(new Color(135, 206, 250));
+            qcmDispo[i].setForeground(new Color(0, 0, 0,170));
+            qcmDispo[i].setBackground(new Color(242, 208, 241));
             qcmDispo[i].addActionListener(this);
-            qcmDispo[i].setFont(customFont.deriveFont(Font.BOLD,15));
-            //qcmDispo[i].setBackground();
+            qcmDispo[i].setFont(customFont.deriveFont(Font.BOLD,20));
             y += 50;
             layeredPane.add(qcmDispo[i], Integer.valueOf(1));
         }
@@ -109,7 +108,6 @@ public class StudentGI extends JFrame implements ActionListener{
 	    } catch (ClassNotFoundException e) {
 	        System.out.println("Driver not found!");
 	    } catch (SQLException ex) {
-	        ex.printStackTrace();
 	    }
 	}
 
@@ -117,7 +115,7 @@ public class StudentGI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		//the results button :
 		if (e.getSource() == result) {
-			new Result(id,nom);
+			new Result(id);
 			dispose();
 		}
 		for (int i = 0; i < qcmTitles.size(); i++) {
@@ -128,5 +126,4 @@ public class StudentGI extends JFrame implements ActionListener{
             }
         }
 	}
-
 }
