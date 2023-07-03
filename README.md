@@ -32,7 +32,7 @@ Here's the MLDR that showcases the relationships between various entities in our
 - After logging in as a student, you will be presented with the Student Interface.
 - This interface will display all available MQCs based on your academic level.
 - Review the list of MQCs and select the one you wish to attempt.
-- Optionally, click the button to view your marks for all attempted MQCs.
+- Optionally, click the button to view your marks for all attempted MQCs (The mqcs follow a canadian grading system).
 
 #### 4.Teacher Interface:
 - If you log in as a teacher, you will be immediately directed to the Teacher Interface.
