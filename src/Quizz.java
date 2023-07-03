@@ -1,3 +1,6 @@
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -20,32 +23,42 @@ public class Quizz extends JFrame implements ActionListener{
 	String[] questions;
 	JLabel qstn;
 	JRadioButton opt1,opt2,opt3,initialize;
-	JButton next,leave;
+	JButton next;
 	ButtonGroup bg;
-	String title,id,nom;
+	String title;
+	Etudiant E;
 	Connection conn =null;
-	
-	public Quizz(String title,String id,String nom) {
+	Image icon=Toolkit.getDefaultToolkit().getImage("C:\\Users\\hp\\Documents\\info 1\\S2\\java\\MQC-server\\icon.png");
+	public Quizz(String title,int id,String nom) {
 //je dois d'abords afficher les qtsns et au fur et mesure calculer la note
 //finalement stocker la note dan ma variablec count;
 //inserer dans ma table les chamsps: id-nom-titre(title)-profcreateur(prof)-resultat(count)
+		E=new Etudiant();
 		this.title=title;
-		this.id=id;
-		this.nom=nom;
+		this.E.ID=id;
+		this.E.nom=nom;
 		setTitle(title);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(width,height);
 		setLocationRelativeTo(null);
 		setLayout(null);
+		setIconImage(icon);
 		
 		//declaration
+		fcts L=new fcts();
+		Font customFont=L.myFont("C:\\Users\\hp\\Documents\\FONTS\\Poppins-Medium.ttf");
 		options=new String[4*15];
 		questions=new String[15];
 		qstn=new JLabel();
+		qstn.setFont(customFont.deriveFont(Font.BOLD,15));
 		next=new JButton("next");
+		next.setFont(customFont.deriveFont(Font.BOLD,15));
 		opt1=new JRadioButton();
+		opt1.setFont(customFont.deriveFont(Font.BOLD,15));
 		opt2=new JRadioButton();
+		opt2.setFont(customFont.deriveFont(Font.BOLD,15));
 		opt3=new JRadioButton();
+		opt3.setFont(customFont.deriveFont(Font.BOLD,15));
 		initialize=new JRadioButton();
 		bg=new ButtonGroup();
 		bg.add(opt1);
@@ -69,7 +82,7 @@ public class Quizz extends JFrame implements ActionListener{
 	     opt3.addActionListener(this);
 	     next.addActionListener(this);
 	   
-	    retrieveData("SELECT Question, Ans1, Ans2, Ans3, AnsRight FROM "+title) ;
+	    retrieveData("SELECT Question, Ans1, Ans2, Ans3, AnsRight FROM `q&a`  WHERE Titre='"+title+"'") ;
 	    add(qstn);
         add(next);
 
@@ -103,17 +116,12 @@ public class Quizz extends JFrame implements ActionListener{
                 selectedButton = opt3;
             
 
-        if (selectedButton != null && selectedButton.getText().equals(correctAnswer)) { 
-            count++;
-            System.out.println("wuhu");}
+        if (selectedButton != null && selectedButton.getText().equals(correctAnswer))
+        	count++ ;
         else if (selectedButton==null)
-			System.out.println("neutral");
-		else { 
+			;
+		else 
 			count--;
-			System.out.println("boo");
-			
-		}
-			
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -165,33 +173,20 @@ public class Quizz extends JFrame implements ActionListener{
 	public void LoadExamsPasseTable (){
 				
 				try {
-	            // Requête pour obtenir le créateur à partir de la table QCMS
-	            String query1 = "SELECT Prof FROM QCMS WHERE titre = ?";
-	            PreparedStatement statement1 = conn.prepareStatement(query1);
-	            statement1.setString(1, title);
-	            
-	            // Exécution de la requête pour récupérer le créateur
-	            ResultSet result = statement1.executeQuery();
-	            String prof = "";
-	            if (result.next()) {
-	            	prof= result.getString("Prof");
-	            }
 
 	            // Requête SQL pour insérer des données dans la table "examsPasse"
-	            String query2 = "INSERT INTO examspasse (id, nom, titre, createur, resultat) VALUES (?, ?, ?, ?, ?)";
+	            String query = "INSERT INTO examspasse (idEtudiant, titre, Note) VALUES (?, ?, ?)";
 
 	            // Création de l'instruction préparée
-	            PreparedStatement statement2 = conn.prepareStatement(query2);
+	            PreparedStatement statement= conn.prepareStatement(query);
 
 	            // Assignation des valeurs aux paramètres de l'instruction préparée
-	            statement2.setInt(1,Integer.parseInt(id) );
-	            statement2.setString(2, nom);
-	            statement2.setString(3, title);
-	            statement2.setString(4, prof);
-	            statement2.setInt(5, count);
-	            statement2.executeUpdate();
-	            statement1.close();
-	            statement2.close();
+	            statement.setInt(1,E.ID);
+	            statement.setString(2, title);
+	            statement.setInt(3, count);
+	            statement.executeUpdate();
+	            statement.close();
+	           
 	        }  
 				
 				catch (SQLException e) {
